@@ -81,6 +81,7 @@ const App = () => {
               renderInput={(params) => (
                 <TextField {...params} variant="filled" />
               )}
+              disableFuture
             />
             <Button variant="contained" disableElevation type="submit">
               계산하기
