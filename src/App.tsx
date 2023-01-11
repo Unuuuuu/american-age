@@ -8,16 +8,20 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
 import { css } from "@emotion/react";
-import Collapse from "@mui/material/Collapse";
+import Grow from "@mui/material/Grow";
 import getWesternAgeFromBirthday from "./utils";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 const appCss = {
   container: css({
     height: "100%",
-    paddingTop: "32px",
-    paddingBottom: "32px",
+    paddingTop: "16px",
+    paddingBottom: "16px",
+    overflowY: "auto",
   }),
-  topAlert: css({
+  titleContainer: css({
+    marginTop: "32px",
     marginBottom: "32px",
   }),
 };
@@ -55,19 +59,18 @@ const App = () => {
 
   return (
     <Container maxWidth="xs" css={appCss.container}>
-      <Alert severity="info" css={appCss.topAlert}>
+      <Alert severity="info">
         만 나이는 2023년 6월 28일부터 시행되며, {dday}일 남았습니다.
       </Alert>
-      <Typography variant="h4" component="h1" align="center">
-        만 나이 계산기
-      </Typography>
-      <Typography paragraph align="center">
-        몇 살이 줄었는지 확인해보세요.
-      </Typography>
+      <div css={appCss.titleContainer}>
+        <Typography variant="h4" component="h1" align="center">
+          만 나이 계산기
+        </Typography>
+        <Typography paragraph align="center">
+          몇 살이 줄었는지 확인해보세요.
+        </Typography>
+      </div>
       <Stack spacing={2}>
-        <Collapse in={westernAge !== null}>
-          <Alert severity="success">{`만 ${westernAge}세입니다.`}</Alert>
-        </Collapse>
         <form onSubmit={handleFormSubmit}>
           <Stack spacing={2}>
             <DatePicker
@@ -91,6 +94,16 @@ const App = () => {
             </Button>
           </Stack>
         </form>
+        <Grow in={westernAge !== null}>
+          <Card variant="outlined">
+            <CardContent>
+              <Typography color="text.secondary" variant="caption">
+                만 나이
+              </Typography>
+              <Typography>{westernAge}세</Typography>
+            </CardContent>
+          </Card>
+        </Grow>
       </Stack>
     </Container>
   );
