@@ -14,12 +14,17 @@ import getWesternAgeFromBirthday from "./utils";
 const appCss = {
   container: css({
     height: "100%",
-    paddingTop: "128px",
-    paddingBottom: "128px",
+    paddingTop: "32px",
+    paddingBottom: "32px",
+  }),
+  topAlert: css({
+    marginBottom: "32px",
   }),
 };
 
 type BirthdayType = Dayjs | null;
+
+const dday = dayjs("2023-06-28").diff(dayjs(), "day") + 1;
 
 const App = () => {
   const [birthday, setBirthday] = useState<BirthdayType>(null);
@@ -50,6 +55,9 @@ const App = () => {
 
   return (
     <Container maxWidth="xs" css={appCss.container}>
+      <Alert severity="info" css={appCss.topAlert}>
+        만 나이는 2023년 6월 28일부터 시행되며, {dday}일 남았습니다.
+      </Alert>
       <Typography variant="h4" component="h1" align="center">
         만 나이 계산기
       </Typography>
