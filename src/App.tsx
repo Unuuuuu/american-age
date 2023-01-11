@@ -9,7 +9,7 @@ import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
 import { css } from "@emotion/react";
 import Grow from "@mui/material/Grow";
-import getWesternAgeFromBirthday from "./utils";
+import getAmericanAgeFromBirthday from "./utils";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
@@ -30,7 +30,7 @@ type BirthdayType = Dayjs | null;
 
 const App = () => {
   const [birthday, setBirthday] = useState<BirthdayType>(null);
-  const [westernAge, setWesternAge] = useState<number | null>(null);
+  const [americanAge, setAmericanAge] = useState<number | null>(null);
 
   const handleDatePickerChange = (newBirthday: BirthdayType) => {
     setBirthday(newBirthday);
@@ -49,10 +49,10 @@ const App = () => {
     }
 
     // 만 나이를 계산한다.
-    const westernAgeFromBirthday = getWesternAgeFromBirthday(birthday);
+    const americanAgeFromBirthday = getAmericanAgeFromBirthday(birthday);
 
     // 계산된 만 나이로 업데이트한다.
-    setWesternAge(westernAgeFromBirthday);
+    setAmericanAge(americanAgeFromBirthday);
   };
 
   return (
@@ -90,13 +90,13 @@ const App = () => {
             </Button>
           </Stack>
         </form>
-        <Grow in={westernAge !== null}>
+        <Grow in={americanAge !== null}>
           <Card variant="outlined">
             <CardContent>
               <Typography color="text.secondary" variant="caption">
                 만 나이
               </Typography>
-              <Typography>{westernAge}세</Typography>
+              <Typography>{americanAge}세</Typography>
             </CardContent>
           </Card>
         </Grow>

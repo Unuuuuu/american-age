@@ -3,7 +3,7 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 
 dayjs.extend(isSameOrAfter);
 
-const getWesternAgeFromBirthday = (birthday: Dayjs) => {
+const getAmericanAgeFromBirthday = (birthday: Dayjs) => {
   const currentYear = dayjs().get("year");
   const birthdayYear = birthday.get("year");
 
@@ -17,13 +17,13 @@ const getWesternAgeFromBirthday = (birthday: Dayjs) => {
   );
 
   // 현재 년도에서 생일 년도를 뺀다.
-  let westernAge = currentYear - birthdayYear;
+  let americanAge = currentYear - birthdayYear;
   // 생일이 지나지 않았다면 1을 추가로 뺀다.
   if (!isBirthdayPassed) {
-    westernAge -= 1;
+    americanAge -= 1;
   }
 
-  return westernAge;
+  return americanAge;
 };
 
-export default getWesternAgeFromBirthday;
+export default getAmericanAgeFromBirthday;
