@@ -57,7 +57,9 @@ const App = () => {
 
   return (
     <Container maxWidth="xs" css={appCss.container}>
-      <Alert severity="info">만 나이는 2023년 6월 28일부터 시행됩니다.</Alert>
+      <Alert severity="info">
+        만 나이 통일은 2023년 6월 28일부터 시행됩니다.
+      </Alert>
       <div css={appCss.titleContainer}>
         <Typography variant="h4" component="h1" align="center">
           만 나이 계산기
