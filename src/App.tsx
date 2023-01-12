@@ -55,7 +55,7 @@ const App = () => {
         <Typography variant="h4" component="h1" align="center">
           만 나이 계산기
         </Typography>
-        <Typography paragraph align="center">
+        <Typography variant="body1" component="h2" align="center">
           몇 살이 줄었는지 확인해보세요.
         </Typography>
       </div>
@@ -78,7 +78,7 @@ const App = () => {
               views={["year", "month", "day"]}
               maxDate={dayjs()}
             />
-            <Button variant="contained" disableElevation type="submit">
+            <Button variant="contained" type="submit">
               계산하기
             </Button>
           </Stack>
