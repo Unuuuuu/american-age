@@ -11,8 +11,8 @@ import { css } from "@emotion/react";
 import Grow from "@mui/material/Grow";
 import { getAgeFromBirthday } from "./utils";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import { AgeType } from "./types";
+import Grid from "@mui/material/Grid";
 
 const appCss = {
   container: css({
@@ -50,9 +50,7 @@ const App = () => {
 
   return (
     <Container maxWidth="xs" css={appCss.container}>
-      <Alert severity="info">
-        만 나이 통일은 2023년 6월 28일부터 시행됩니다.
-      </Alert>
+      <Alert severity="info">2023년 6월 28일부터 만 나이로 통일됩니다.</Alert>
       <div css={appCss.titleContainer}>
         <Typography variant="h4" component="h1" align="center">
           만 나이 계산기
@@ -85,20 +83,36 @@ const App = () => {
             </Button>
           </Stack>
         </form>
-        <Grow in={age !== null}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography color="text.secondary" variant="caption">
-                한국식 나이
-              </Typography>
-              <Typography>{age?.koreanAge}세</Typography>
-              <Typography color="text.secondary" variant="caption">
-                만 나이
-              </Typography>
-              <Typography>{age?.americanAge}세</Typography>
-            </CardContent>
-          </Card>
-        </Grow>
+        {age !== null && (
+          <Grow in={age !== null}>
+            <Card>
+              <Grid container>
+                <Grid item xs={6} sx={{ p: 2 }}>
+                  <Typography color="text.secondary" variant="caption">
+                    만 나이
+                  </Typography>
+                  <Typography>{age.americanAge}세</Typography>
+                </Grid>
+                <Grid item xs={6} sx={{ p: 2 }}>
+                  <Typography color="text.secondary" variant="caption">
+                    한국식 나이
+                  </Typography>
+                  <Typography>{age.koreanAge}세</Typography>
+                </Grid>
+                <Grid item xs={12} sx={{ p: 2 }}>
+                  <Typography color="text.secondary" variant="caption">
+                    {age.koreanAge - age.americanAge === 2
+                      ? "생일이 지나지 않았기 때문에"
+                      : "생일이 지났기 때문에"}
+                  </Typography>
+                  <Typography>
+                    {age.koreanAge - age.americanAge}살이 줄었어요. 😲
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Card>
+          </Grow>
+        )}
       </Stack>
     </Container>
   );
