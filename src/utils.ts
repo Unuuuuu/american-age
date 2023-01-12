@@ -1,9 +1,10 @@
 import dayjs, { Dayjs } from "dayjs";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import { AgeType } from "./types";
 
 dayjs.extend(isSameOrAfter);
 
-const getAmericanAgeFromBirthday = (birthday: Dayjs) => {
+const getAmericanAgeFromBirthday = (birthday: Dayjs): number => {
   const currentYear = dayjs().get("year");
   const birthdayYear = birthday.get("year");
 
@@ -26,4 +27,24 @@ const getAmericanAgeFromBirthday = (birthday: Dayjs) => {
   return americanAge;
 };
 
-export default getAmericanAgeFromBirthday;
+const getKoreanAgeFromBirthday = (birthday: Dayjs): number => {
+  const currentYear = dayjs().get("year");
+  const birthdayYear = birthday.get("year");
+
+  const koreanAge = currentYear - birthdayYear + 1;
+  return koreanAge;
+};
+
+export const getAgeFromBirthday = (birthday: Dayjs | null): AgeType | null => {
+  if (birthday === null || !birthday.isValid() || dayjs().isBefore(birthday)) {
+    return null;
+  }
+
+  const koreanAge = getKoreanAgeFromBirthday(birthday);
+  const americanAge = getAmericanAgeFromBirthday(birthday);
+
+  return {
+    koreanAge,
+    americanAge,
+  };
+};

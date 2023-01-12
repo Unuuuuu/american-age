@@ -9,9 +9,10 @@ import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
 import { css } from "@emotion/react";
 import Grow from "@mui/material/Grow";
-import getAmericanAgeFromBirthday from "./utils";
+import { getAgeFromBirthday } from "./utils";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { AgeType } from "./types";
 
 const appCss = {
   container: css({
@@ -26,33 +27,25 @@ const appCss = {
   }),
 };
 
-type BirthdayType = Dayjs | null;
-
 const App = () => {
-  const [birthday, setBirthday] = useState<BirthdayType>(null);
-  const [americanAge, setAmericanAge] = useState<number | null>(null);
+  const [birthday, setBirthday] = useState<Dayjs | null>(null);
+  const [age, setAge] = useState<AgeType | null>(null);
 
-  const handleDatePickerChange = (newBirthday: BirthdayType) => {
+  const handleDatePickerChange = (newBirthday: Dayjs | null) => {
     setBirthday(newBirthday);
   };
 
   const handleFormSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    // 값이 유효하지 않은 경우에 대해 예외 처리를 한다.
-    if (
-      birthday === null ||
-      !birthday.isValid() ||
-      dayjs().isBefore(birthday)
-    ) {
+    const ageFromBirthday = getAgeFromBirthday(birthday);
+
+    if (ageFromBirthday === null) {
+      // 유효하지 않은 birthday인 경우에 대해서는 이미 helperText ui가 표시되고 있기 때문에 아무것도 하지 않는다.
       return;
     }
 
-    // 만 나이를 계산한다.
-    const americanAgeFromBirthday = getAmericanAgeFromBirthday(birthday);
-
-    // 계산된 만 나이로 업데이트한다.
-    setAmericanAge(americanAgeFromBirthday);
+    setAge(ageFromBirthday);
   };
 
   return (
@@ -92,13 +85,17 @@ const App = () => {
             </Button>
           </Stack>
         </form>
-        <Grow in={americanAge !== null}>
+        <Grow in={age !== null}>
           <Card variant="outlined">
             <CardContent>
               <Typography color="text.secondary" variant="caption">
+                한국식 나이
+              </Typography>
+              <Typography>{age?.koreanAge}세</Typography>
+              <Typography color="text.secondary" variant="caption">
                 만 나이
               </Typography>
-              <Typography>{americanAge}세</Typography>
+              <Typography>{age?.americanAge}세</Typography>
             </CardContent>
           </Card>
         </Grow>
