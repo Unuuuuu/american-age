@@ -50,7 +50,9 @@ const App = () => {
 
   return (
     <Container maxWidth="xs" css={appCss.container}>
-      <Alert severity="info">2023년 6월 28일부터 만 나이로 통일됩니다.</Alert>
+      <Alert severity="info" sx={{ boxShadow: 1 }}>
+        2023년 6월 28일부터 만 나이로 통일됩니다.
+      </Alert>
       <div css={appCss.titleContainer}>
         <Typography variant="h4" component="h1" align="center">
           만 나이 계산기
@@ -69,7 +71,7 @@ const App = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  variant="filled"
+                  variant="outlined"
                   helperText={params.error ? "잘못된 생년월일입니다." : ""}
                 />
               )}
