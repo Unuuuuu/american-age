@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { FormEventHandler, useRef, useState } from "react";
@@ -44,7 +45,11 @@ const App = () => {
   };
 
   const handleSaveButtonClick = () => {
-    html2canvas(targetRef.current!).then((canvas) => {
+    if (targetRef.current === null) {
+      return;
+    }
+
+    html2canvas(targetRef.current).then((canvas) => {
       const anchorElement = document.createElement("a");
       anchorElement.setAttribute("download", "man-nai.png");
       anchorElement.setAttribute("href", canvas.toDataURL());
