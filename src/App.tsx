@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useRef, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -13,6 +13,9 @@ import Card from "@mui/material/Card";
 import { Data } from "./types";
 import Grid from "@mui/material/Grid";
 import { getDataFromBirthday } from "./utils";
+import html2canvas from "html2canvas";
+import { CardActions, IconButton } from "@mui/material";
+import DownloadIcon from "@mui/icons-material/Download";
 
 const appCss = {
   container: css({
@@ -30,6 +33,7 @@ const appCss = {
 const App = () => {
   const [birthday, setBirthday] = useState<Dayjs | null>(null);
   const [data, setData] = useState<Data | null>(null);
+  const targetRef = useRef<HTMLDivElement>(null);
 
   const handleDatePickerChange = (newBirthday: Dayjs | null) => {
     setBirthday(newBirthday);
@@ -45,6 +49,15 @@ const App = () => {
       // 유효하지 않은 birthday인 경우에 대해서는 이미 DatePicker component에서 처리되고 있기 때문에 아무 처리도 하지 않은 채 리턴한다.
       return;
     }
+  };
+
+  const handleDownloadButtonClick = () => {
+    html2canvas(targetRef.current!).then((canvas) => {
+      const anchorElement = document.createElement("a");
+      anchorElement.setAttribute("download", "man-nai.png");
+      anchorElement.setAttribute("href", canvas.toDataURL());
+      anchorElement.click();
+    });
   };
 
   return (
@@ -87,7 +100,7 @@ const App = () => {
         {data !== null && (
           <Grow in={data !== null}>
             <Card>
-              <Grid container>
+              <Grid container ref={targetRef}>
                 <Grid item xs={6} sx={{ p: 2 }}>
                   <Typography color="text.secondary" variant="caption">
                     생년월일
@@ -121,6 +134,11 @@ const App = () => {
                   <Typography>{data.diff}살이 줄었어요. 😲</Typography>
                 </Grid>
               </Grid>
+              <CardActions>
+                <IconButton onClick={handleDownloadButtonClick}>
+                  <DownloadIcon />
+                </IconButton>
+              </CardActions>
             </Card>
           </Grow>
         )}
