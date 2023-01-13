@@ -19,7 +19,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
-import { Divider } from "@mui/material";
+import { Divider, SvgIcon } from "@mui/material";
+import { ReactComponent as PartyPopperIcon } from "./assets/party-popper.svg";
 
 const App = () => {
   const [birthday, setBirthday] = useState<Dayjs | null>(null);
@@ -101,30 +102,25 @@ const App = () => {
         </form>
         {data !== null && (
           <Grow in={data !== null}>
-            <Box>
+            <Stack spacing={2}>
               <Card variant="outlined" ref={targetRef}>
-                <CardContent sx={{ backgroundColor: "#fffde7" }}>
-                  <Typography
-                    variant="h2"
-                    component="div"
-                    align="center"
-                    sx={{ mb: 2 }}
-                  >
-                    🎉
-                  </Typography>
+                <CardContent
+                  sx={{ backgroundColor: "#fffde7", textAlign: "center" }}
+                >
+                  <SvgIcon
+                    component={PartyPopperIcon}
+                    sx={{ fontSize: "64px", marginBottom: 2 }}
+                  />
                   <Typography
                     color="text.secondary"
                     variant="caption"
                     component="div"
-                    align="center"
                   >
                     {data.diff === 2
                       ? "생일이 지나지 않았기 때문에"
                       : "생일이 지났기 때문에"}
                   </Typography>
-                  <Typography align="center">
-                    {data.diff}살이 줄었어요.
-                  </Typography>
+                  <Typography>{data.diff}살이 줄었어요.</Typography>
                 </CardContent>
                 <Divider />
                 <Stack direction="row" alignItems="center">
@@ -153,10 +149,9 @@ const App = () => {
                   </Box>
                 </Stack>
               </Card>
-              <Stack sx={{ position: "relative", height: "88px" }}>
+              <Box>
                 <SpeedDial
-                  ariaLabel="SpeedDial basic example"
-                  sx={{ position: "absolute", bottom: 16, right: 16 }}
+                  ariaLabel="SpeedDial"
                   direction="left"
                   icon={<SpeedDialIcon />}
                 >
@@ -166,8 +161,8 @@ const App = () => {
                     onClick={handleSaveButtonClick}
                   />
                 </SpeedDial>
-              </Stack>
-            </Box>
+              </Box>
+            </Stack>
           </Grow>
         )}
       </Stack>
