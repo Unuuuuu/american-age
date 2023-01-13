@@ -14,8 +14,41 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
-  rules: {},
+  plugins: ["react", "@typescript-eslint", "import"],
+  rules: {
+    "import/order": [
+      "warn",
+      {
+        groups: [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type",
+        ],
+        pathGroups: [
+          {
+            pattern: "react",
+            group: "builtin",
+            position: "before",
+          },
+          {
+            pattern: "react-dom/client",
+            group: "builtin",
+            position: "before",
+          },
+        ],
+        pathGroupsExcludedImportTypes: ["react", "react-dom/client"],
+        alphabetize: {
+          order: "asc",
+        },
+        warnOnUnassignedImports: true,
+      },
+    ],
+  },
   settings: {
     react: {
       version: "detect",
