@@ -108,51 +108,55 @@ const App = () => {
         {data !== null && (
           <Grow in={data !== null}>
             <Stack spacing={2}>
-              <Card variant="outlined" ref={targetRef}>
-                <CardContent
-                  sx={{ backgroundColor: "#fffde7", textAlign: "center" }}
-                >
-                  <SvgIcon
-                    component={PartyPopperIcon}
-                    sx={{ fontSize: "64px", marginBottom: 2 }}
-                  />
-                  <Typography
-                    color="text.secondary"
-                    variant="caption"
-                    component="div"
+              <Card variant="outlined">
+                <Box ref={targetRef}>
+                  <CardContent
+                    sx={{ backgroundColor: "#fffde7", textAlign: "center" }}
                   >
-                    {data.diff === 2
-                      ? "생일이 지나지 않았기 때문에"
-                      : "생일이 지났기 때문에"}
-                  </Typography>
-                  <Typography>{data.diff}살이 줄었어요.</Typography>
-                </CardContent>
-                <Divider />
-                <Stack direction="row" alignItems="center">
-                  <Box sx={{ flex: 1, p: 2 }}>
+                    <SvgIcon
+                      component={PartyPopperIcon}
+                      sx={{ fontSize: "64px", marginBottom: 2 }}
+                    />
                     <Typography
                       color="text.secondary"
                       variant="caption"
                       component="div"
-                      align="center"
                     >
-                      한국식 나이
+                      {data.diff === 2
+                        ? "생일이 지나지 않았기 때문에"
+                        : "생일이 지났기 때문에"}
                     </Typography>
-                    <Typography align="center">{data.koreanAge}세</Typography>
-                  </Box>
-                  <ChevronRightRoundedIcon />
-                  <Box sx={{ flex: 1, p: 2 }}>
-                    <Typography
-                      color="text.secondary"
-                      variant="caption"
-                      component="div"
-                      align="center"
-                    >
-                      만 나이
-                    </Typography>
-                    <Typography align="center">{data.americanAge}세</Typography>
-                  </Box>
-                </Stack>
+                    <Typography>{data.diff}살이 줄었어요.</Typography>
+                  </CardContent>
+                  <Divider />
+                  <Stack direction="row" alignItems="center">
+                    <Box sx={{ flex: 1, p: 2 }}>
+                      <Typography
+                        color="text.secondary"
+                        variant="caption"
+                        component="div"
+                        align="center"
+                      >
+                        한국식 나이
+                      </Typography>
+                      <Typography align="center">{data.koreanAge}세</Typography>
+                    </Box>
+                    <ChevronRightRoundedIcon />
+                    <Box sx={{ flex: 1, p: 2 }}>
+                      <Typography
+                        color="text.secondary"
+                        variant="caption"
+                        component="div"
+                        align="center"
+                      >
+                        만 나이
+                      </Typography>
+                      <Typography align="center">
+                        {data.americanAge}세
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </Box>
               </Card>
               <Box>
                 <SpeedDial
@@ -162,7 +166,7 @@ const App = () => {
                 >
                   <SpeedDialAction
                     icon={<SaveIcon />}
-                    tooltipTitle="저장"
+                    tooltipTitle="이미지 저장"
                     onClick={handleSaveButtonClick}
                   />
                 </SpeedDial>
