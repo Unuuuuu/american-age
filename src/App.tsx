@@ -9,10 +9,10 @@ import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
 import { css } from "@emotion/react";
 import Grow from "@mui/material/Grow";
-import { getAgeFromBirthday } from "./utils";
 import Card from "@mui/material/Card";
-import { AgeType } from "./types";
+import { Data } from "./types";
 import Grid from "@mui/material/Grid";
+import { getDataFromBirthday } from "./utils";
 
 const appCss = {
   container: css({
@@ -29,7 +29,7 @@ const appCss = {
 
 const App = () => {
   const [birthday, setBirthday] = useState<Dayjs | null>(null);
-  const [age, setAge] = useState<AgeType | null>(null);
+  const [data, setData] = useState<Data | null>(null);
 
   const handleDatePickerChange = (newBirthday: Dayjs | null) => {
     setBirthday(newBirthday);
@@ -38,14 +38,13 @@ const App = () => {
   const handleFormSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    const ageFromBirthday = getAgeFromBirthday(birthday);
-
-    if (ageFromBirthday === null) {
-      // 유효하지 않은 birthday인 경우에 대해서는 이미 helperText ui가 표시되고 있기 때문에 아무것도 하지 않는다.
+    try {
+      const dataFromBirthday = getDataFromBirthday(birthday);
+      setData(dataFromBirthday);
+    } catch {
+      // 유효하지 않은 birthday인 경우에 대해서는 이미 DatePicker component에서 처리되고 있기 때문에 아무 처리도 하지 않은 채 리턴한다.
       return;
     }
-
-    setAge(ageFromBirthday);
   };
 
   return (
@@ -85,31 +84,29 @@ const App = () => {
             </Button>
           </Stack>
         </form>
-        {age !== null && (
-          <Grow in={age !== null}>
+        {data !== null && (
+          <Grow in={data !== null}>
             <Card>
               <Grid container>
                 <Grid item xs={6} sx={{ p: 2 }}>
                   <Typography color="text.secondary" variant="caption">
                     만 나이
                   </Typography>
-                  <Typography>{age.americanAge}세</Typography>
+                  <Typography>{data.americanAge}세</Typography>
                 </Grid>
                 <Grid item xs={6} sx={{ p: 2 }}>
                   <Typography color="text.secondary" variant="caption">
                     한국식 나이
                   </Typography>
-                  <Typography>{age.koreanAge}세</Typography>
+                  <Typography>{data.koreanAge}세</Typography>
                 </Grid>
                 <Grid item xs={12} sx={{ p: 2 }}>
                   <Typography color="text.secondary" variant="caption">
-                    {age.koreanAge - age.americanAge === 2
+                    {data.diff === 2
                       ? "생일이 지나지 않았기 때문에"
                       : "생일이 지났기 때문에"}
                   </Typography>
-                  <Typography>
-                    {age.koreanAge - age.americanAge}살이 줄었어요. 😲
-                  </Typography>
+                  <Typography>{data.diff}살이 줄었어요. 😲</Typography>
                 </Grid>
               </Grid>
             </Card>
