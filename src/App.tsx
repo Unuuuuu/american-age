@@ -90,6 +90,18 @@ const App = () => {
               <Grid container>
                 <Grid item xs={6} sx={{ p: 2 }}>
                   <Typography color="text.secondary" variant="caption">
+                    생년월일
+                  </Typography>
+                  <Typography>{data.formattedBirthday}</Typography>
+                </Grid>
+                <Grid item xs={6} sx={{ p: 2 }}>
+                  <Typography color="text.secondary" variant="caption">
+                    금일
+                  </Typography>
+                  <Typography>{data.formattedToday}</Typography>
+                </Grid>
+                <Grid item xs={6} sx={{ p: 2 }}>
+                  <Typography color="text.secondary" variant="caption">
                     만 나이
                   </Typography>
                   <Typography>{data.americanAge}세</Typography>
