@@ -12,7 +12,6 @@ export const getDataFromBirthday = (birthday: Dayjs | null): Data => {
   const now = dayjs();
   const currentYear = now.get("year");
   const birthdayYear = birthday.get("year");
-  const template = "YYYY.MM.DD.";
 
   /** korean age */
   const koreanAge = currentYear - birthdayYear + 1;
@@ -35,17 +34,9 @@ export const getDataFromBirthday = (birthday: Dayjs | null): Data => {
   /** diff */
   const diff = koreanAge - americanAge;
 
-  /** formattedBirthday */
-  const formattedBirthday = birthday.format(template);
-
-  /** formattedToday */
-  const formattedToday = now.format(template);
-
   return {
     koreanAge,
     americanAge,
     diff,
-    formattedBirthday,
-    formattedToday,
   };
 };
