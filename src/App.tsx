@@ -1,6 +1,7 @@
 import React, { FormEventHandler, useRef, useState } from "react";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import SaveIcon from "@mui/icons-material/Save";
+import ShareIcon from "@mui/icons-material/Share";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -54,6 +55,32 @@ const App = () => {
       anchorElement.setAttribute("download", "man-nai.png");
       anchorElement.setAttribute("href", canvas.toDataURL());
       anchorElement.click();
+    });
+  };
+
+  const handleShareButtonClick = () => {
+    if (targetRef.current === null) {
+      return;
+    }
+
+    html2canvas(targetRef.current).then((canvas) => {
+      canvas.toBlob(async (blob) => {
+        if (blob === null || typeof navigator.share === "undefined") {
+          return;
+        }
+
+        try {
+          await navigator.share({
+            title: "만 나이 계산기",
+            text: "만 나이를 계산해보세요. 몇 살이 줄었는지 확인해보세요.",
+            url: "https://www.man-nai.com",
+            files: [new File([blob], "man-nai.png", { type: blob.type })],
+          });
+          console.log("성공");
+        } catch (error) {
+          console.log("실패", error);
+        }
+      });
     });
   };
 
@@ -169,6 +196,13 @@ const App = () => {
                     tooltipTitle="이미지 저장"
                     onClick={handleSaveButtonClick}
                   />
+                  {typeof navigator.share !== "undefined" && (
+                    <SpeedDialAction
+                      icon={<ShareIcon />}
+                      tooltipTitle="이미지 공유"
+                      onClick={handleShareButtonClick}
+                    />
+                  )}
                 </SpeedDial>
               </Box>
             </Stack>
