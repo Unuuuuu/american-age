@@ -72,7 +72,6 @@ const App = () => {
         try {
           await navigator.share({
             title: "만 나이 계산기",
-            text: "만 나이를 계산해보세요. 몇 살이 줄었는지 확인해보세요.",
             url: "https://www.man-nai.com",
             files: [new File([blob], "man-nai.png", { type: blob.type })],
           });
