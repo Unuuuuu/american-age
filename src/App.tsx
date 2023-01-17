@@ -1,7 +1,11 @@
 import React, { FormEventHandler, useRef, useState } from "react";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import SaveIcon from "@mui/icons-material/Save";
 import ShareIcon from "@mui/icons-material/Share";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -17,12 +21,23 @@ import Stack from "@mui/material/Stack";
 import SvgIcon from "@mui/material/SvgIcon";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { SxProps, Theme } from "@mui/material/styles";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import html2canvas from "html2canvas";
 import { ReactComponent as PartyPopperIcon } from "./assets/party-popper.svg";
 import { Data } from "./types";
 import { getDataFromBirthday } from "./utils";
+
+const accordionSx: SxProps<Theme> = (theme) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    borderBottom: 0,
+  },
+  "&:before": {
+    display: "none",
+  },
+});
 
 const App = () => {
   const [birthday, setBirthday] = useState<Dayjs | null>(null);
@@ -152,7 +167,9 @@ const App = () => {
                         ? "생일이 지나지 않았기 때문에"
                         : "생일이 지났기 때문에"}
                     </Typography>
-                    <Typography>{data.diff}살이 줄었어요.</Typography>
+                    <Typography>
+                      {data.diff === 2 ? "두" : "한"} 살이 줄었어요.
+                    </Typography>
                   </CardContent>
                   <Divider />
                   <Stack direction="row" alignItems="center">
@@ -207,6 +224,29 @@ const App = () => {
             </Stack>
           </Grow>
         )}
+        <Box>
+          <Accordion disableGutters elevation={0} sx={accordionSx}>
+            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
+              <Typography variant="body2">만 나이 계산하는 방법</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography variant="body2">
+                현재 연도에서 출생 연도를 뺀 후 생일이 지났으면 그대로 사용하고,
+                생일이 아직 안 지났으면 한 살을 빼줍니다.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion disableGutters elevation={0} sx={accordionSx}>
+            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
+              <Typography variant="body2">한국식 나이 계산하는 방법</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography variant="body2">
+                현재 연도에서 출생 연도를 뺀 후 한 살을 더해줍니다.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </Box>
       </Stack>
     </Container>
   );
