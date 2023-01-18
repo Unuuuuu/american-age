@@ -84,16 +84,11 @@ const App = () => {
           return;
         }
 
-        try {
-          await navigator.share({
-            title: "만 나이 계산기",
-            url: "https://www.man-nai.com",
-            files: [new File([blob], "man-nai.png", { type: blob.type })],
-          });
-          console.log("성공");
-        } catch (error) {
-          console.log("실패", error);
-        }
+        await navigator.share({
+          title: "만 나이 계산기",
+          url: "https://www.man-nai.com",
+          files: [new File([blob], "man-nai.png", { type: blob.type })],
+        });
       });
     });
   };
@@ -123,6 +118,29 @@ const App = () => {
         </Typography>
       </Box>
       <Stack spacing={2}>
+        <Box>
+          <Accordion disableGutters elevation={0} sx={accordionSx}>
+            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
+              <Typography variant="body2">만 나이 계산하는 방법</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography variant="body2">
+                현재 연도에서 출생 연도를 뺀 후 생일이 지났으면 그대로 사용하고,
+                생일이 아직 안 지났으면 한 살을 빼줍니다.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion disableGutters elevation={0} sx={accordionSx}>
+            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
+              <Typography variant="body2">한국식 나이 계산하는 방법</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography variant="body2">
+                현재 연도에서 출생 연도를 뺀 후 한 살을 더해줍니다.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </Box>
         <form onSubmit={handleFormSubmit}>
           <Stack spacing={2}>
             <DatePicker
@@ -224,29 +242,6 @@ const App = () => {
             </Stack>
           </Grow>
         )}
-        <Box>
-          <Accordion disableGutters elevation={0} sx={accordionSx}>
-            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-              <Typography variant="body2">만 나이 계산하는 방법</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography variant="body2">
-                현재 연도에서 출생 연도를 뺀 후 생일이 지났으면 그대로 사용하고,
-                생일이 아직 안 지났으면 한 살을 빼줍니다.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion disableGutters elevation={0} sx={accordionSx}>
-            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-              <Typography variant="body2">한국식 나이 계산하는 방법</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography variant="body2">
-                현재 연도에서 출생 연도를 뺀 후 한 살을 더해줍니다.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-        </Box>
       </Stack>
     </Container>
   );
